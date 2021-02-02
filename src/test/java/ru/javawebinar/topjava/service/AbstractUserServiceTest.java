@@ -70,7 +70,7 @@ public class UserServiceTest {
     @Test
     public void duplicateMailCreate() {
         assertThrows(DataAccessException.class, () ->
-                service.create(new User(null, "Duplicate", "user@yandex.ru", "newPass", Role.USER)));
+                service.create(new User(null, "Duplicate", "user@yandex.ru", "newPass", 2000, Role.USER)));
     }
 
     @Test
@@ -116,9 +116,9 @@ public class UserServiceTest {
 
     @Test
     public void createWithException() {
-        validateRootCause(() -> service.create(new User(null, "  ", "mail@yandex.ru", "password", Role.USER)), ConstraintViolationException.class);
-        validateRootCause(() -> service.create(new User(null, "User", "  ", "password", Role.USER)), ConstraintViolationException.class);
-        validateRootCause(() -> service.create(new User(null, "User", "mail@yandex.ru", "  ", Role.USER)), ConstraintViolationException.class);
+        validateRootCause(() -> service.create(new User(null, "  ", "mail@yandex.ru", "password",  2000, Role.USER)), ConstraintViolationException.class);
+        validateRootCause(() -> service.create(new User(null, "User", "  ", "password",  2000, Role.USER)), ConstraintViolationException.class);
+        validateRootCause(() -> service.create(new User(null, "User", "mail@yandex.ru", "  ",  2000, Role.USER)), ConstraintViolationException.class);
         validateRootCause(() -> service.create(new User(null, "User", "mail@yandex.ru", "password", 9, true, new Date(), Set.of())), ConstraintViolationException.class);
         validateRootCause(() -> service.create(new User(null, "User", "mail@yandex.ru", "password", 10001, true, new Date(), Set.of())), ConstraintViolationException.class);
     }
